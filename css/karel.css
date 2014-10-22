@@ -1,0 +1,7 @@
+.content {
+  padding: 0 1em 0;
+}
+textarea {
+  width: 95%;
+  min-height: 500px;
+}
