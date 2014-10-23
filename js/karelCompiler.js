@@ -25,19 +25,19 @@ function begin(original) { //Le arquivo de nome especificado
     code = original.split(" ");
     cleanAll();
     removeBlanks();
-    
+
     if (code[0].toUpperCase() === "INICIO-DO-PROGRAMA") {
         code = code.slice(1, code.length);
         begin = true;
     }
-    
+
     if (code[code.length - 1].toUpperCase() === "FIM-DO-PROGRAMA") {
         code = code.slice(0, code.length - 1);
         end = true;
     }
-    
+
     //console.log(code);
-    
+
     if (begin && end) {
         index = 0;
         define(code);
@@ -58,7 +58,7 @@ function removeBlanks() {
         if (code[token] !== "") {
             new_code.push(clean(code[token]));
         }
-        
+
     }
     code = new_code;
 }
@@ -93,14 +93,49 @@ function isNumber(token) {
 }
 
 function isIdentifier(token) {
-    if (isLetter(token[0]) && token.toUpperCase() !== "INICIO" && token.toUpperCase() !== "FIM" && token.toUpperCase() != "ENQUANTO" && token.toUpperCase() !== "FACA" && token.toUpperCase() !== "REPITA" && token.toUpperCase() !== "VEZES" && token.toUpperCase() !== "SE" && token.toUpperCase() !== "SENAO" && token.toLowerCase() !== "mova" && token.toLowerCase() !== "vireesquerda" && token.toLowerCase() !== "pegabip" && token.toLowerCase() !== "poebip" && token.toLowerCase() !== "desliga" && token.toLowerCase() !== "frente-livre" && token.toLowerCase() !== "frente-bloqueada" && token.toLowerCase() !== "esquerda-livre" && token.toLowerCase() !== "esquerda-bloqueada" && token.toLowerCase() !== "direita-livre" && token.toLowerCase() !== "direita-bloqueada" && token.toLowerCase() !== "proximo-a-bip" && token.toLowerCase() !== "nao-proximo-a-bip" && token.toLowerCase() !== "existem-bips-na-bolsa" && token.toLowerCase() !== "nao-existem-bips-na-bolsa" && token.toLowerCase() !== "voltado-norte" && token.toLowerCase() !== "nao-voltado-norte" && token.toLowerCase() !== "voltado-oeste" && token.toLowerCase() !== "nao-voltado-oeste" && token.toLowerCase() !== "voltado-sul" && token.toLowerCase() !== "nao-voltado-sul" && token.toLowerCase() !== "voltado-leste" && token.toLowerCase() !== "nao-voltado-leste" && token.toUpperCase() != "DEFINA-INSTRUCAO" && token.toUpperCase() != "INICIO-DO-PROGRAMA" && token.toUpperCase() != "FIM-DO-PROGRAMA" && token.toUpperCase() != "INICIO-DE-EXECUCAO" && token.toUpperCase() != "FIM-DE-EXECUCAO") {
+    if (isLetter(token[0]) &&
+       token.toUpperCase() !== "INICIO" &&
+       token.toUpperCase() !== "FIM" &&
+       token.toUpperCase() !== "ENQUANTO" &&
+       token.toUpperCase() !== "FACA" &&
+       token.toUpperCase() !== "REPITA" &&
+       token.toUpperCase() !== "VEZES" &&
+       token.toUpperCase() !== "SE" &&
+       token.toUpperCase() !== "SENAO" &&
+       token.toLowerCase() !== "mova" &&
+       token.toLowerCase() !== "vireesquerda" &&
+       token.toLowerCase() !== "pegabip" &&
+       token.toLowerCase() !== "poebip" &&
+       token.toLowerCase() !== "desliga" &&
+       token.toLowerCase() !== "frente-livre" &&
+       token.toLowerCase() !== "frente-bloqueada" &&
+       token.toLowerCase() !== "esquerda-livre" &&
+       token.toLowerCase() !== "esquerda-bloqueada" &&
+       token.toLowerCase() !== "direita-livre" &&
+       token.toLowerCase() !== "direita-bloqueada" &&
+       token.toLowerCase() !== "proximo-a-bip" &&
+       token.toLowerCase() !== "nao-proximo-a-bip" &&
+       token.toLowerCase() !== "existem-bips-na-bolsa" &&
+       token.toLowerCase() !== "nao-existem-bips-na-bolsa" &&
+       token.toLowerCase() !== "voltado-norte" &&
+       token.toLowerCase() !== "nao-voltado-norte" &&
+       token.toLowerCase() !== "voltado-oeste" &&
+       token.toLowerCase() !== "nao-voltado-oeste" &&
+       token.toLowerCase() !== "voltado-sul" &&
+       token.toLowerCase() !== "nao-voltado-sul" &&
+       token.toLowerCase() !== "voltado-leste" &&
+       token.toLowerCase() !== "nao-voltado-leste" &&
+       token.toUpperCase() !== "DEFINA-INSTRUCAO" &&
+       token.toUpperCase() !== "INICIO-DO-PROGRAMA" &&
+       token.toUpperCase() !== "FIM-DO-PROGRAMA" &&
+       token.toUpperCase() !== "INICIO-DE-EXECUCAO" &&
+       token.toUpperCase() !== "FIM-DE-EXECUCAO") {
         return true;
     }
     return false;
 }
 
 function instructionExists(inst_name) {
-    
     for (i in inst_names) {
         if (inst_name === inst_names[i]) {
             return true;
@@ -137,7 +172,7 @@ function isStatement(ind) {
     }
     result = isBlock(ind);
     if (result[0]) {
-        return result; 
+        return result;
     }
     result = isIteration(ind);
     if (result[0]) {
@@ -175,7 +210,7 @@ function isBlock(ind) {
             next = true;
             ind++;
         }
-        while(next) { //A estrutura espera ao menos mais uma expressão valida 
+        while(next) { //A estrutura espera ao menos mais uma expressão valida
             result = isStatement(ind);
             if (!result[0]) {
                 if (code[result[1]].toUpperCase() == "FIM") {
@@ -187,7 +222,7 @@ function isBlock(ind) {
                 return [false, ind];
             }
             ind = result[1] + 1;
-            
+
             if (code[ind] !== " ;") {
                 next = false;
             }
@@ -197,14 +232,14 @@ function isBlock(ind) {
         }
 
         if (code[ind].toUpperCase() === "FIM") {
-            
+
             return [true, ind];
         }
         error('Palavra "FIM" esperada');
         return [false, ind];
     }
     return [false, ind];
-        
+
 }
 
 function isIteration(ind) {
@@ -216,7 +251,7 @@ function isIteration(ind) {
             if (code[ind].toUpperCase() === "VEZES") {
                 ind++;
                 result = isStatement(ind);
-                if (result[0]) { 
+                if (result[0]) {
                     return result;
                 }
                 error('Expressão esperada');
@@ -238,7 +273,7 @@ function isConditional(ind) {
         if (isCondition(code[ind])) {
             ind++;
             if (code[ind].toUpperCase() === "ENTAO") {
-                ind++;          
+                ind++;
                 result = isStatement(ind);
                 if (result[0]) {
                     ind = result[1] + 1;
@@ -277,7 +312,7 @@ function isLoop(ind) {
                 }
                 error('Expressão esperada');
                 return [false, result[1]];
-                
+
             }
             error('Palavra "FACA" esperada');
             return [false, ind];
@@ -328,7 +363,7 @@ function define(code) { //Trata de definições de novas instruções
                 if (code[temp[1] + 1] !== " ;") {
                     error('";" esperado após definição de função "' + temp[0].name + '".');
                     break;
-                } 
+                }
             }
         }
     }
@@ -342,7 +377,7 @@ function new_inst(code, inst_ind) { //Retorna um objeto instruction
     inst_ind++;
     if (isIdentifier(code[inst_ind])) {
         inst_name = code[inst_ind];
-        location = inst_name;
+        // location = inst_name;
         inst_ind++;
         if (code[inst_ind].toUpperCase() !== "COMO") {
             return [new instruction(inst_name, "!"), inst_ind];
@@ -355,13 +390,13 @@ function new_inst(code, inst_ind) { //Retorna um objeto instruction
         else {
             return [new instruction(inst_name, "!"), result[1]];
         }
-        
+
     }
     else {
         console.log('Na definição de instrução: "' + code[inst_ind] + '" não é um identificador válido.');
         return [new instruction("", "!"), result[1]];
     }
-    
+
     //console.log("\n" + inst_body);
     return [new instruction(inst_name, inst_body), result[1]];
 }
@@ -484,9 +519,6 @@ function write() {
             }
         }
     }
-    
-    
-    
 }
 
 function readStatement(cod, ind, nextCounter) {
@@ -540,7 +572,7 @@ function readStatement(cod, ind, nextCounter) {
             else_ind = execOut.length - 1;
             execOut[jump_ind] = "jumpt " + (execOut.length) + "," + cond;
             ind = readStatement(cod, ind, nextCounter);
-            execOut[else_ind] = "jump " + execOut.length; 
+            execOut[else_ind] = "jump " + execOut.length;
             return ind;
         }
         execOut[jump_ind] = "jumpt " + execOut.length + "," + cond;
@@ -576,10 +608,10 @@ function readStatement(cod, ind, nextCounter) {
         else {
             execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[0]>=" + counter;
         }
-        
+
         return ind;
     }
-    
+
     if (cod[ind].toUpperCase() === "ENQUANTO") {
         var jump_ind;
         var jumpback_ind;
@@ -594,7 +626,7 @@ function readStatement(cod, ind, nextCounter) {
         execOut[jumpback_ind] = "jumpt " + jump_ind + "," + cond;
         return ind;
     }
-    
+
     if (instructionExists(cod[ind])) {
         execOut.push("set D[1]," + (execOut.length + 5));
         execOut.push("set D[1]+1,D[0]");

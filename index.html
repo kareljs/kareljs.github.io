@@ -38,18 +38,18 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <form role="form">
+          <form role="form" action="#" onsubmit="return processa();">
             <div class="form-group">
               <h2>Entre com o código fonte aqui</h2>
-              <textarea class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea>
+              <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea>
             </div> <!-- .form-group -->
             <button type="submit" class="btn btn-primary">Processar código</button>
           </form>
         </div> <!-- .col-md-6 -->
         <div class="col-md-6">
           <h2>Código Objeto Gerado</h2>
-          <div>
-          </div>
+          <pre id="codigo-objeto">
+          </pre>
         </div> <!-- .col-md-6 -->
       </div> <!-- .row -->
     </div> <!-- .container -->
@@ -63,5 +63,25 @@
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/karelCompiler.js"></script>
+    <script>
+      function processa() {
+        var fonte = document.getElementById('codigo-fonte');
+        var objeto = document.getElementById('codigo-objeto');
+        var buffer = '';
+
+        begin(fonte.value);
+
+        if (errorDisplayed === false) {
+          for (e in execOut) {
+            buffer += execOut[e] + "\n";
+          }
+        }
+
+        objeto.innerHTML = buffer;
+
+        return false;
+      }
+    </script>
   </body>
 </html>
