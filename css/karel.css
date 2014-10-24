@@ -37,3 +37,10 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+
+/* Customização do Karel
+-------------------------------------------------- */
+#codigo-fonte, #codigo-objeto {
+  margin-bottom: 10px;
+}
