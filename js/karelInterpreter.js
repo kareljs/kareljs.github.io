@@ -1,0 +1,88 @@
+var C = [];
+var D = [];
+var ip = 0;
+var encerrarExecucao = false;
+
+function interpretador() {
+  var codigoObjeto = document.getElementById('codigo-objeto').value.split('\n');
+
+  carregarCodigoObjeto(codigoObjeto);
+  executarPrograma();
+}
+
+function carregarCodigoObjeto(codigo) {
+  for (var i = 0; i < codigo.length; i++) {
+    C[i] = codigo[i];
+  }
+}
+
+function executarPrograma() {
+  var instrucao;
+  do {
+    instrucao = passo();
+  } while (instrucao != "dsl");
+}
+
+function executarProgramaTemporizado() {
+  window.setInterval(passo, 2000);
+}
+
+function passo() {
+  if (encerrarExecucao) {
+    return;
+  }
+
+  var instrucao = C[ip];
+  ip++;
+
+  executarInstrucao(instrucao);
+
+  return instrucao;
+}
+
+function executarInstrucao(instrucao) {
+  var auxiliar = instrucao.split(' ');
+  var comando = auxiliar[0];
+  var comandos = {
+    "frb": Mapa.frenteBloqueada(),
+    "frl": Mapa.frenteLivre(),
+    "eqb": Mapa.esquerdaBloqueada(),
+    "eql": Mapa.esquerdaLivre(),
+    "drb": Mapa.direitaBloqueada(),
+    "drl": Mapa.direitaLivre(),
+    "nprb": Mapa.naoProximoBip(),
+    "prb": Mapa.proximoBip(),
+    "nexs": Mapa.naoExistemBipsNaBolsa(),
+    "exs": Mapa.existemBipsNaBolsa(),
+    "nvtn": Mapa.naoVoltadoNorte(),
+    "vtn": Mapa.voltadoNorte(),
+    "nvts": Mapa.naoVoltadoSul(),
+    "vts": Mapa.voltadoSul(),
+    "nvto": Mapa.naoVoltadoOeste(),
+    "vto": Mapa.voltadoOeste(),
+    "nvtl": Mapa.naoVoltadoLeste(),
+    "vtl": Mapa.voltadoLeste()
+  };
+
+  if (comando == 'set') {
+    var auxiliarSet = auxiliar[1].split(',');
+    var enderecoDestino = auxiliarSet[0];
+    var enderecoOrigem = auxiliarSet[1];
+
+    eval('D[' + enderecoDestino + '] = ' + enderecoOrigem);
+  } else if (comando == 'jump') {
+    if (auxiliar[1].length >= 4) {
+      eval('ip = ' + auxiliar[1]);
+    }
+  } else if (comando == 'jumpt') {
+    var auxiliarJumpt = auxiliar[1].split('-');
+    var condicao = auxiliarJumpt[1];
+
+    eval('var t = ' + condicao);
+    if (t) {
+      eval("ip = " + parseInt(auxiliarJumpt[0]));
+    }
+  } else if (comando == 'dsl') {
+    encerrarExecucao = true;
+  }
+}
