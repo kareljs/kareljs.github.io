@@ -1,0 +1,7 @@
+# OS stuff
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project stuff
+bower_components
