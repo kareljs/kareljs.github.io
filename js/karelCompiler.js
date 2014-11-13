@@ -6,6 +6,7 @@ var execCode = "";
 var execOut = [];
 var inst_names = [];
 var callIndex = [];
+var errorOut = [];
 
 
 function instruction(name, body) {
@@ -20,6 +21,7 @@ function instruction(name, body) {
 function begin(original) { //Le arquivo de nome especificado
     var begin = false;
     var end = false;
+    errorDisplayed = false;
     original = clean(original);
     //console.log(original);
     code = original.split(" ");
@@ -66,6 +68,7 @@ function removeBlanks() {
 function error(err) {
     if (!errorDisplayed) {
         console.log(' - Erro: ' + err);
+        errorOut.push(' - Erro: ' + err);
         errorDisplayed = true;
     }
 }
@@ -104,8 +107,8 @@ function isIdentifier(token) {
        token.toUpperCase() !== "SENAO" &&
        token.toLowerCase() !== "mova" &&
        token.toLowerCase() !== "vireesquerda" &&
-       token.toLowerCase() !== "pegabip" &&
-       token.toLowerCase() !== "poebip" &&
+       token.toLowerCase() !== "pegabipe" &&
+       token.toLowerCase() !== "poebipe" &&
        token.toLowerCase() !== "desliga" &&
        token.toLowerCase() !== "frente-livre" &&
        token.toLowerCase() !== "frente-bloqueada" &&
@@ -113,10 +116,10 @@ function isIdentifier(token) {
        token.toLowerCase() !== "esquerda-bloqueada" &&
        token.toLowerCase() !== "direita-livre" &&
        token.toLowerCase() !== "direita-bloqueada" &&
-       token.toLowerCase() !== "proximo-a-bip" &&
-       token.toLowerCase() !== "nao-proximo-a-bip" &&
-       token.toLowerCase() !== "existem-bips-na-bolsa" &&
-       token.toLowerCase() !== "nao-existem-bips-na-bolsa" &&
+       token.toLowerCase() !== "proximo-a-bipe" &&
+       token.toLowerCase() !== "nao-proximo-a-bipe" &&
+       token.toLowerCase() !== "existem-bipes-na-bolsa" &&
+       token.toLowerCase() !== "nao-existem-bipes-na-bolsa" &&
        token.toLowerCase() !== "voltado-norte" &&
        token.toLowerCase() !== "nao-voltado-norte" &&
        token.toLowerCase() !== "voltado-oeste" &&
@@ -146,14 +149,14 @@ function instructionExists(inst_name) {
 
 function isCondition(token) {
     token = token.toLowerCase();
-    if (token === "frente-livre" || token === "frente-bloqueada" || token === "esquerda-livre" || token === "esquerda-bloqueada" || token === "direita-livre" || token === "direita-bloqueada" || token === "proximo-a-bip" || token === "nao-proximo-a-bip" || token === "existem-bips-na-bolsa" || token === "nao-existem-bips-na-bolsa" || token === "voltado-norte" || token === "nao-voltado-norte" || token === "voltado-oeste" || token === "nao-voltado-oeste" || token === "voltado-sul" || token === "nao-voltado-sul" || token === "voltado-leste" || token === "nao-voltado-leste") {
+    if (token === "frente-livre" || token === "frente-bloqueada" || token === "esquerda-livre" || token === "esquerda-bloqueada" || token === "direita-livre" || token === "direita-bloqueada" || token === "proximo-a-bipe" || token === "nao-proximo-a-bipe" || token === "existem-bipes-na-bolsa" || token === "nao-existem-bipes-na-bolsa" || token === "voltado-norte" || token === "nao-voltado-norte" || token === "voltado-oeste" || token === "nao-voltado-oeste" || token === "voltado-sul" || token === "nao-voltado-sul" || token === "voltado-leste" || token === "nao-voltado-leste") {
         return true;
     }
     return false;
 }
 
 function isInstruction(ind) {
-    if (code[ind].toLowerCase() === "mova" || code[ind].toLowerCase() === "vireesquerda" || code[ind].toLowerCase() === "pegabip" || code[ind].toLowerCase() === "poebip" || code[ind].toLowerCase() === "desliga") {
+    if (code[ind].toLowerCase() === "mova" || code[ind].toLowerCase() === "vireesquerda" || code[ind].toLowerCase() === "pegabipe" || code[ind].toLowerCase() === "poebipe" || code[ind].toLowerCase() === "desliga") {
         return [true, ind];
     }
     if (isIdentifier(code[ind])) {
@@ -534,11 +537,11 @@ function readStatement(cod, ind, nextCounter) {
         execOut.push("vre");
         return ind;
     }
-    if (cod[ind].toLowerCase() === "pegabip") {
+    if (cod[ind].toLowerCase() === "pegabipe") {
         execOut.push("peg");
         return ind;
     }
-    if (cod[ind].toLowerCase() === "poebip") {
+    if (cod[ind].toLowerCase() === "poebipe") {
         execOut.push("poe");
         return ind;
     }
@@ -645,10 +648,10 @@ function getJumpCondition(token) {
       "esquerda-bloqueada": "eql",
       "direita-livre": "drb",
       "direita-bloqueada": "drl",
-      "proximo-a-bip": "nprb",
-      "nao-proximo-a-bip": "prb",
-      "existem-bips-na-bolsa": "nexs",
-      "nao-existem-bips-na-bolsa": "exs",
+      "proximo-a-bipe": "nprb",
+      "nao-proximo-a-bipe": "prb",
+      "existem-bipes-na-bolsa": "nexs",
+      "nao-existem-bipes-na-bolsa": "exs",
       "voltado-norte": "nvtn",
       "nao-voltado-norte": "vtn",
       "voltado-sul": "nvts",

@@ -11,6 +11,10 @@ function compilar() {
       for (e in execOut) {
         buffer += execOut[e] + "\n";
       }
+    } else {
+      for (r in errorOut) {
+        buffer += errorOut[r] + "\n";
+      }
     }
 
     objeto.innerHTML = buffer;
@@ -25,20 +29,20 @@ function demo() {
     "\t\t\tREPITA 3 VEZES\n" + 
     "\t\t\t\tvireesquerda\n" + 
     "\t\tFIM;\n" + 
-    "\tDEFINA-INSTRUCAO bipfrente COMO\n" + 
+    "\tDEFINA-INSTRUCAO bipefrente COMO\n" + 
     "\t\tINICIO\n" + 
-    "\t\t\tENQUANTO nao-proximo-a-bip FACA\n" + 
+    "\t\t\tENQUANTO nao-proximo-a-bipe FACA\n" + 
     "\t\t\t\tINICIO\n" + 
     "\t\t\t\t\tSE frente-livre ENTAO\n" + 
     "\t\t\t\t\t\tmova\n" + 
     "\t\t\t\tFIM;\n" + 
-    "\t\t\tSE proximo-a-bip ENTAO\n" + 
-    "\t\t\t\tpegabip\n" + 
+    "\t\t\tSE proximo-a-bipe ENTAO\n" + 
+    "\t\t\t\tpegabipe\n" + 
     "\t\tFIM;\n" + 
-    "\tDEFINA-INSTRUCAO buscabip COMO\n" + 
-    "\t\tENQUANTO nao-existem-bips-na-bolsa FACA\n" + 
+    "\tDEFINA-INSTRUCAO buscabipe COMO\n" + 
+    "\t\tENQUANTO nao-existem-bipes-na-bolsa FACA\n" + 
     "\t\t\tINICIO\n" + 
-    "\t\t\t\tbipfrente;\n" + 
+    "\t\t\t\tbipefrente;\n" + 
     "\t\t\t\tviredireita;\n" + 
     "\t\t\t\tSE frente-livre ENTAO\n" + 
     "\t\t\t\t\tINICIO\n" + 
@@ -50,16 +54,20 @@ function demo() {
     "\t\t\tFIM;\n" + 
     "\tINICIO-DE-EXECUCAO\n" + 
     "\t\tvireesquerda;\n" + 
-    "\t\tbuscabip;\n" + 
+    "\t\tbuscabipe;\n" + 
     "\t\tdesliga\n" + 
     "\tFIM-DE-EXECUCAO\n" + 
     "FIM-DO-PROGRAMA";
   fonte.value = demo;
 }
 
-function download() {
+function gerarDownload(data) {
   window.URL = window.URL || window.webkitURL;
-  var objeto = document.getElementById('codigo-objeto');
-  var blob = new Blob([objeto.value], {type: 'application/octet-binary'});
-  location.href = window.URL.createObjectURL(blob);
+  var blob = new Blob([data], {type: 'application/octet-stream'});
+  return window.URL.createObjectURL(blob);
+}
+
+function downloadObjeto() {
+  var objeto = document.getElementById('objeto');
+  // .href = gerarDownload(objeto);
 }
