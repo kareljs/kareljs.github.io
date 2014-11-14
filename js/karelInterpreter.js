@@ -4,6 +4,7 @@ function Interpretador(codigoObjeto) {
   var ip = 0;
   var encerrarExecucao = false;
   var codigo = codigoObjeto.split('\n');
+  var karel = new Robo();
 
   for (var i = 0; i < codigo.length; i++) {
     C[i] = codigo[i];
@@ -14,6 +15,9 @@ function Interpretador(codigoObjeto) {
     instrucao = passo();
   } while (instrucao != "dsl");
   //window.setInterval(passo, 2000);
+
+  karel.imprimeBuffer();
+  karel.imprimeCoordenadas();
 
   function passo() {
     if (encerrarExecucao) {
@@ -32,25 +36,26 @@ function Interpretador(codigoObjeto) {
     var auxiliar = instrucao.split(' ');
     var comando = auxiliar[0];
     var comandos = {
-      "mov": Robo.mova,
-      "frb": Robo.frenteBloqueada,
-      "frl": Robo.frenteLivre,
-      "eqb": Robo.esquerdaBloqueada,
-      "eql": Robo.esquerdaLivre,
-      "drb": Robo.direitaBloqueada,
-      "drl": Robo.direitaLivre,
-      "nprb": Robo.naoProximoBip,
-      "prb": Robo.proximoBip,
-      "nexs": Robo.naoExistemBipsNaBolsa,
-      "exs": Robo.existemBipsNaBolsa,
-      "nvtn": Robo.naoVoltadoNorte,
-      "vtn": Robo.voltadoNorte,
-      "nvts": Robo.naoVoltadoSul,
-      "vts": Robo.voltadoSul,
-      "nvto": Robo.naoVoltadoOeste,
-      "vto": Robo.voltadoOeste,
-      "nvtl": Robo.naoVoltadoLeste,
-      "vtl": Robo.voltadoLeste
+      "mov": karel.mova,
+      "vre": karel.vireEsquerda,
+      "frb": karel.frenteBloqueada,
+      "frl": karel.frenteLivre,
+      "eqb": karel.esquerdaBloqueada,
+      "eql": karel.esquerdaLivre,
+      "drb": karel.direitaBloqueada,
+      "drl": karel.direitaLivre,
+      "nprb": karel.naoProximoBip,
+      "prb": karel.proximoBip,
+      "nexs": karel.naoExistemBipsNaBolsa,
+      "exs": karel.existemBipsNaBolsa,
+      "nvtn": karel.naoVoltadoNorte,
+      "vtn": karel.voltadoNorte,
+      "nvts": karel.naoVoltadoSul,
+      "vts": karel.voltadoSul,
+      "nvto": karel.naoVoltadoOeste,
+      "vto": karel.voltadoOeste,
+      "nvtl": karel.naoVoltadoLeste,
+      "vtl": karel.voltadoLeste
     };
 
     if (comando == 'set') {
