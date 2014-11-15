@@ -4,7 +4,7 @@ function Interpretador(codigoObjeto) {
   var ip = 0;
   var encerrarExecucao = false;
   var codigo = codigoObjeto.split('\n');
-  var karel = new Robo();
+  karel = new Robo();
 
   for (var i = 0; i < codigo.length; i++) {
     C[i] = codigo[i];
@@ -16,7 +16,6 @@ function Interpretador(codigoObjeto) {
   } while (instrucao != "dsl");
   //window.setInterval(passo, 2000);
 
-  karel.imprimeBuffer();
   karel.imprimeCoordenadas();
 
   function passo() {
@@ -38,6 +37,10 @@ function Interpretador(codigoObjeto) {
     var comandos = {
       "mov": karel.mova,
       "vre": karel.vireEsquerda,
+      "peg": karel.pegaBipe,
+      "poe": karel.poeBipe
+    };
+    var testes = {
       "frb": karel.frenteBloqueada,
       "frl": karel.frenteLivre,
       "eqb": karel.esquerdaBloqueada,
@@ -70,20 +73,27 @@ function Interpretador(codigoObjeto) {
       var auxiliarJumpt = auxiliar[1].split(',');
       var condicao = auxiliarJumpt[1];
 
+      if (condicao == 'frl') {
+
+      }
+
       if (condicao.length > 4) {
         eval('var t = ' + condicao);
         if (t) {
           eval("ip = " + parseInt(auxiliarJumpt[0]));
         }
       } else {
-        if (condicao in comandos) {
-          comandos[condicao]();
+        if (condicao in testes) {
+          testes[condicao]();
         }
       }
     } else if (comando == 'dsl') {
       encerrarExecucao = true;
-    } else if (comando in comandos) {
-      comandos[comando]();
+    // } else if (comando in comandos) {
+    } else if (comando == 'mov') {
+      karel.mova();
+    } else if (comando == 'vre') {
+      karel.vireEsquerda();
     }
   }
 }
