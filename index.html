@@ -39,36 +39,53 @@
     </div> <!-- .navbar navbar-default navbar-fixed -->
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#fonte" role="tab" data-toggle="tab">Código Fonte</a></li>
-            <li><a href="#objeto" role="tab" data-toggle="tab">Código Objeto</a></li>
-          </ul> <!-- .nav nav-tabs -->
+      <ul class="nav nav-tabs" id="tabs-menu">
+        <li class="active"><a href="ambiente-programacao" role="tab" data-toogle="tab">Ambiente de Programação</a></li>
+        <li><a href="editor-mapas" role="tab" data-toogle="tab">Editor de Mapas</a></li>
+      </ul> <!-- #tabs-menu .nav nav-tabs -->
 
-          <div class="tab-content">
-            <div class="tab-pane active" id="fonte">
-              <h2>Entre com o código fonte aqui</h2>
-              <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea>
-              <button type="submit" class="btn btn-primary" onclick="compilar();">Compilar código</button>
-              <button type="submit" class="btn btn-primary" onclick="demo();">Carregar código exemplo</button>
-            </div> <!-- #fonte .tab-pane active -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="ambiente-programacao">
+          <div class="row">
+            <h2>Ambiente de Programação</h2>
 
-            <div class="tab-pane" id="objeto">
-              <h2>Código Objeto Gerado</h2>
-              <pre id="codigo-objeto"></pre>
-              <button type="submit" class="btn btn-primary" onclick="download();">Gerar arquivo do código objeto</button>
-            </div> <!-- #objeto .tab-pane -->
-          </div> <!-- .tab-content -->
-        </div> <!-- .col-md-6 -->
-        <div class="col-md-6">
-          <img src="img/karelPrototype.jpg" alt="Mapa do Robô" width="600" height="600">
-        </div> <!-- .col-md-6 -->
-      </div> <!-- .row -->
-      <div class="row">
-          <div class="alert alert-danger" role="alert" id="error-alert">
-            <a href="#" class="alert-link">...</a>
-          </div>
+            <div class="col-md-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#fonte" role="tab" data-toggle="tab">Código Fonte</a></li>
+                <li><a href="#objeto" role="tab" data-toggle="tab">Código Objeto</a></li>
+              </ul> <!-- .nav nav-tabs -->
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="fonte">
+                  <h2>Entre com o código fonte aqui</h2>
+                  <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea>
+                  <button type="submit" class="btn btn-primary" onclick="compilar();">Compilar código</button>
+                  <button type="submit" class="btn btn-primary" onclick="demo();">Carregar código exemplo</button>
+                </div> <!-- #fonte .tab-pane active -->
+
+                <div class="tab-pane" id="objeto">
+                  <h2>Código Objeto Gerado</h2>
+                  <pre id="codigo-objeto"></pre>
+                  <button type="submit" class="btn btn-primary" onclick="download();">Gerar arquivo do código objeto</button>
+                </div> <!-- #objeto .tab-pane -->
+              </div> <!-- .tab-content -->
+            </div> <!-- .col-md-6 -->
+
+            <div class="col-md-6">
+              <img src="img/karelPrototype.jpg" alt="Mapa do Robô" width="600" height="600">
+            </div> <!-- .col-md-6 -->    
+          </div> <!-- .row -->
+        </div> <!-- #ambiente-programacao .tab-pane active -->
+
+        <div class="tab-pane" id="editor-mapas">
+          <h2>Editor de Mapas</h2>
+        </div> <!-- #editor-mapas .tab-pane -->
+      </div> <!-- .tab-content -->
+
+      <div class="row" id="error">
+        <div class="alert alert-danger" role="alert" id="error-alert">
+          <a href="#" class="alert-link">...</a>
+        </div> <!-- .alert alert-danger -->
       </div> <!-- .row -->
     </div> <!-- .container -->
 
