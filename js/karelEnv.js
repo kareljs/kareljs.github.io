@@ -1,6 +1,7 @@
 function compilar() {
   var fonte = document.getElementById('codigo-fonte');
   var objeto = document.getElementById('codigo-objeto');
+  var alert = document.getElementById('error-alert');
 
   if (fonte.value) {
     var buffer = '';
@@ -11,12 +12,17 @@ function compilar() {
       for (e in execOut) {
         buffer += execOut[e] + "\n";
       }
+
+      objeto.innerHTML = buffer;
     } else {
       for (r in errorOut) {
         buffer += errorOut[r] + "\n";
       }
+
+      alert.innerHTML = buffer;
     }
-    document.getElementById("error-alert").innerHTML = buffer;
+  } else {
+    alert.innerHTML = 'Por favor insira um código fonte';
   }
 }
 
