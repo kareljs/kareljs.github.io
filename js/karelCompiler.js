@@ -1,6 +1,7 @@
 var code = [];
 var instructions = [];
 var errorDisplayed = false;
+var inExecutionBlock = false;
 var index = 0;
 var execCode = "";
 var execOut = [];
@@ -69,6 +70,9 @@ function error(err) {
     if (!errorDisplayed) {
         console.log(' - Erro: ' + err);
         errorOut.push(' - Erro: ' + err);
+        if (inExecutionBlock) {
+            console.log("No bloco de execução");
+        }
         errorDisplayed = true;
     }
 }
@@ -217,7 +221,7 @@ function isBlock(ind) {
             result = isStatement(ind);
             if (!result[0]) {
                 if (code[result[1]].toUpperCase() == "FIM") {
-                    error('Expressão esperada após ";" em bloco');
+                    error('Expressão esperada depois de \';\' em bloco');
                 }
                 else {
                     error('Expressão não válida em bloco');
@@ -238,7 +242,7 @@ function isBlock(ind) {
 
             return [true, ind];
         }
-        error('Palavra "FIM" esperada');
+        error('Bloco não delimitado, palavra \'FIM\' esperada');
         return [false, ind];
     }
     return [false, ind];
@@ -257,13 +261,13 @@ function isIteration(ind) {
                 if (result[0]) {
                     return result;
                 }
-                error('Expressão esperada');
+                error('Expressão válida esperada na estrutura de repetição');
                 return [false, result[1]];
             }
-            error('Palavra "VEZES" esperada');
+            error('Palavra \'VEZES\' esperada após número de iterações');
             return [false, ind];
         }
-        error('Número esperado');
+        error('Número esperado após \'REPITA\'');
         return [false, ind];
     }
     return [false, ind];
@@ -284,18 +288,18 @@ function isConditional(ind) {
                         ind++;
                         result = isStatement(ind);
                         if (!result[0]) {
-                            error('Expressão esperada depois de "SENAO"');
+                            error('Expressão válida esperada depois de \'SENAO\'');
                         }
                     }
                     return result;
                 }
-                error('Expressão esperada');
+                error('Expressão válida esperada na estrutura de condição');
                 return result;
             }
-            error('Palavra "ENTAO" esperada');
+            error('Palavra \'ENTAO\' esperada depois de condição');
             return result;
         }
-        error('Condição esperada');
+        error('Condição esperada depois de \'SE\'');
         return [false, ind];
     }
     return [false, ind];
@@ -317,10 +321,10 @@ function isLoop(ind) {
                 return [false, result[1]];
 
             }
-            error('Palavra "FACA" esperada');
+            error('Palavra \'FACA\' esperada depois de condição');
             return [false, ind];
         }
-        error('Condição esperada');
+        error('Condição esperada depois de \'ENQUANTO\'');
         return [false, ind];
     }
     return false;
@@ -364,7 +368,7 @@ function define(code) { //Trata de definições de novas instruções
                 cond = true;
                 console.log(temp[0].name + ": " + temp[0].body);
                 if (code[temp[1] + 1] !== " ;") {
-                    error('";" esperado após definição de função "' + temp[0].name + '".');
+                    error('\';\' esperado após definição de instrução "' + temp[0].name + '".');
                     break;
                 }
             }
@@ -407,6 +411,7 @@ function new_inst(code, inst_ind) { //Retorna um objeto instruction
 function execution() {
     var begin = false;
     var end = false;
+    inExecutionBlock = true;
     var b_ind;
     var e_ind;
     for (var tok in code) {
@@ -434,7 +439,7 @@ function execution() {
         }
     }
     else {
-        error('Faltando um ou ambos delimitadores de execução');
+        error('Faltando um ou ambos delimitadores de execução (INICIO-DE-EXECUCAO, FIM-DE-EXECUCAO)');
     }
 }
 
@@ -593,7 +598,7 @@ function readStatement(cod, ind, nextCounter) {
         else {
             execOut.push("set D[0],0");
         }
-        execOut.push("jumpt ??,D[0]+" + nextCounter + ">=" + counter);
+        execOut.push("jumpt ??,D[D[0]+" + nextCounter + "]>=" + counter);
         ind = ind + 2;
         jumpback_ind = execOut.length - 1;
         ind = readStatement(cod, ind, nextCounter);
@@ -609,7 +614,7 @@ function readStatement(cod, ind, nextCounter) {
             execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[D[0]+" + nextCounter + "]>=" + counter;
         }
         else {
-            execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[0]>=" + counter;
+            execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[D[0]]>=" + counter;
         }
 
         return ind;
