@@ -16,8 +16,7 @@ function compilar() {
         buffer += errorOut[r] + "\n";
       }
     }
-
-    objeto.innerHTML = buffer;
+    document.getElementById("error-alert").innerHTML = buffer;
   }
 }
 
