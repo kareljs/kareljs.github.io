@@ -606,7 +606,7 @@ function readStatement(cod, ind, nextCounter) {
         execOut.push("jump " + jumpback_ind);
         jump_ind = execOut.length;
         if (nextCounter > 0) {
-            execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[0]+" + nextCounter + ">=" + counter;
+            execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[D[0]+" + nextCounter + "]>=" + counter;
         }
         else {
             execOut[jumpback_ind] = "jumpt " + jump_ind + ",D[0]>=" + counter;

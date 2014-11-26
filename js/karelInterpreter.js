@@ -4,7 +4,7 @@ function Interpretador(codigoObjeto) {
   var ip = 0;
   var encerrarExecucao = false;
   var codigo = codigoObjeto.split('\n');
-  karel = new Robo();
+  var karel = new Robo();
 
   for (var i = 0; i < codigo.length; i++) {
     C[i] = codigo[i];
@@ -89,7 +89,6 @@ function Interpretador(codigoObjeto) {
       }
     } else if (comando == 'dsl') {
       encerrarExecucao = true;
-    // } else if (comando in comandos) {
     } else if (comando == 'mov') {
       karel.mova();
     } else if (comando == 'vre') {
