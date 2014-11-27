@@ -5,12 +5,8 @@
     <meta description="Karel.JS: Ambiente para prática de programação">
     <title>Karel.JS: Ambiente para prática de programação</title>
 
-    <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> -->
-
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/karel.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,7 +33,7 @@
             <li><a href="#">Programe</a></li>
             <li><a href="#">Entenda os Comandos</a></li>
             <li><a href="#">Sobre o Projeto</a></li>
-            <li><a href="#">Baixe o Ambiente</a></li>
+            <li><a href="https://github.com/kareljs">Baixe o Ambiente</a></li>
           </ul> <!-- .nav navbar-nav -->
         </div> <!-- .collapse navbar-collapse -->
       </div> <!-- .container -->
@@ -61,16 +57,18 @@
 
             <div class="tab-content">
               <div class="tab-pane active" id="fonte">
-                <h2>Entre com o código fonte aqui</h2>
-                <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea>
-                <button type="submit" class="btn btn-primary" onclick="compilar();">Compilar código</button>
-                <button type="submit" class="btn btn-primary" onclick="demo();">Carregar código exemplo</button>
+                <h2>Entre com o código aqui em baixo</h2>
+                <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea> <br>
+                <button type="submit" class="btn btn-primary" onclick="compilar();"><i class="fa fa-play-circle"></i> Executar programa</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-file-text"></i> Salvar código</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Carregar código</button> <br><br>
+                <button type="submit" class="btn btn-primary" onclick="demo();"><i class="fa fa-upload"></i> Carregar exemplo</button>
               </div> <!-- #fonte .tab-pane active -->
 
               <div class="tab-pane" id="objeto">
                 <h2>Código Objeto Gerado</h2>
                 <pre id="codigo-objeto"></pre>
-                <button type="submit" class="btn btn-primary" onclick="download();">Gerar arquivo do código objeto</button>
+                <!-- <button type="submit" class="btn btn-primary" onclick="download();">Gerar arquivo do código objeto</button> -->
               </div> <!-- #objeto .tab-pane -->
             </div> <!-- .tab-content -->
           </div> <!-- .col-md-6 -->
@@ -82,25 +80,22 @@
 
         <div class="tab-pane" id="editor-mapas">
           <h2>Editor de Mapas</h2>
-          <div class="row">
-            <div class="col-md-2">
-              <a href="#" class="thumbnail">
-                <img src="img/btnWall.png" alt="...">
-              </a>
-            </div>
-            <div class="col-md-2">
-              <a href="#" class="thumbnail">
-                <img src="img/btnGround.png" alt="...">
-              </a>
-            </div>
-            <div class="col-md-2">
-              <a href="#" class="thumbnail">
-                <img src="img/btnBip.png" alt="...">
-              </a>
-            </div>
+          <div class="col-md-8">
+            <img src="img/karel50x50Ex.png" alt="Mapa do Robô" width="700" height="700"> <br><br>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-file-image-o"></i> Salvar mapa</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Carregar mapa</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar mapa no ambiente</button>
           </div>
-          <div class="row">
-            <img src="img/karel50x50Ex.png" alt="Mapa do Robô" width="700" height="700">
+          <div class="col-md-2">
+            <a href="#" class="thumbnail">
+              <img src="img/btnWall.png" alt="...">
+            </a>
+            <a href="#" class="thumbnail">
+              <img src="img/btnGround.png" alt="...">
+            </a>
+            <a href="#" class="thumbnail">
+              <img src="img/btnBip.png" alt="...">
+            </a>
           </div>
         </div> <!-- #editor-mapas .tab-pane -->
       </div> <!-- .tab-content -->
