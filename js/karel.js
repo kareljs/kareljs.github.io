@@ -57,7 +57,7 @@ var mapDefinition = [
 
 var texGround 	  = PIXI.Texture.fromImage("assets/ground.png");
 var texWall   	  = PIXI.Texture.fromImage("assets/wall.png");
-var texBip 	  	  = PIXI.Texture.fromImage("assets/bipVerde.png");
+var texBip 	  	  = PIXI.Texture.fromImage("assets/bip.png");
 var texKarelFront = PIXI.Texture.fromImage("assets/karelFront.png");
 var texKarelBack  = PIXI.Texture.fromImage("assets/karelBack.png");
 var texKarelLeft  = PIXI.Texture.fromImage("assets/karelLeft.png");
@@ -403,7 +403,7 @@ function MapKarel(mapDef){
 	this.mapDefinition = mapDef;
 	this.mapWidth = this.mapDefinition[0].length;
 	this.mapHeight = this.mapDefinition.length;
-	this.mapTileSize = 32;
+	this.mapTileSize = 100;
 
 	this.generateMap(this.mapDefinition);
 	this.generateRobot();
