@@ -60,7 +60,7 @@
                 <h2>Entre com o código aqui em baixo</h2>
                 <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea> <br>
                 <button type="submit" class="btn btn-primary" onclick="compilar();"><i class="fa fa-play-circle"></i> Executar programa</button>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-file-text"></i> Salvar código</button>
+                <a class="btn btn-primary" id="salvar-codigo" onclick="downloadFonte();"><i class="fa fa-file-text"></i> Salvar código</a>
                 <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Carregar código</button> <br><br>
                 <button type="submit" class="btn btn-primary" onclick="demo();"><i class="fa fa-upload"></i> Carregar exemplo</button>
               </div> <!-- #fonte .tab-pane active -->
