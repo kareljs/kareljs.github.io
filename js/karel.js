@@ -62,6 +62,7 @@ var texKarelFront = PIXI.Texture.fromImage("assets/karelFront.png");
 var texKarelBack  = PIXI.Texture.fromImage("assets/karelBack.png");
 var texKarelLeft  = PIXI.Texture.fromImage("assets/karelLeft.png");
 var texKarelRight = PIXI.Texture.fromImage("assets/karelRight.png");
+var texMsgShutOff = PIXI.Texture.fromImage("assets/karelShutOffMsg.png");
 
 var renderWidth = 800;
 var renderHeight = 800;
@@ -71,21 +72,24 @@ var menu;
 var stage;
 
 var editMode = true;
-var currentBrush = 'B';
+var currentBrush = 'W';
+var running = true;
 
 $(document).ready(function(){
 	start();
 });
 
 $(document).keyup(function(e){
-	if(e.which == 32)//Space
-		robotMove();
+	// if(e.which == 32)//Space
+	// 	robotMove();
 	if(e.which == 37)//LeftArrow
 		robotTurn();
 	if(e.which == 71)//G
 		robotGetBip();
 	if(e.which == 68)//D
 		robotPutBip();
+	if(e.which == 32)
+		resetMap();
 });
 
 function start(){
@@ -116,6 +120,9 @@ function start(){
 
 
 function robotMove(){
+
+	if(!running)
+		return false;
 
 	var nextR;
 	var nextC;
@@ -159,6 +166,9 @@ function robotMove(){
 
 function robotTurn(){
 
+	if(!running)
+		return false;
+
 	switch(map.robot.direction){
 		case('N'):
 			map.robot.direction = 'W';
@@ -183,6 +193,9 @@ function robotTurn(){
 
 function robotGetBip(){
 
+	if(!running)
+		return false;
+
 	if(map.getMapTile(map.robot.mapPosC, map.robot.mapPosR).ktype == 'B'){
 		if(map.getMapTile(map.robot.mapPosC, map.robot.mapPosR).bips == 1){
 			map.getMapTile(map.robot.mapPosC, map.robot.mapPosR).setTexture(texGround);
@@ -197,10 +210,12 @@ function robotGetBip(){
 	}else{
 		return false;
 	}
-
 }
 
 function robotPutBip(){
+
+	if(!running)
+		return false;
 
 	if(map.robot.bipBag > 0){
 		if(map.getMapTile(map.robot.mapPosC, map.robot.mapPosR).ktype == 'B'){
@@ -220,10 +235,12 @@ function robotPutBip(){
 	}else{
 		return false;
 	}
-
 }
 
 function robotFrontFree(){
+
+	if(!running)
+		return false;
 
 	var nextR;
 	var nextC;
@@ -262,6 +279,9 @@ function robotFrontFree(){
 
 function robotRightFree(){
 
+	if(!running)
+		return false;
+
 	var nextR;
 	var nextC;
 
@@ -295,11 +315,13 @@ function robotRightFree(){
 	}
 	//if yes
 	return true;
-
 }
 
 function robotLeftFree(){
 
+	if(!running)
+		return false;
+
 	var nextR;
 	var nextC;
 
@@ -333,34 +355,52 @@ function robotLeftFree(){
 	}
 	//if yes
 	return true;
-
 }
 
 function robotNearBip(){
+
+	if(!running)
+		return false;
 
 	if(map.getMapTile(nextC, nextR).ktype == 'B')
 		return true;
 	else
 		return false;
-
 }
 
 function robotBipOnBag(){
+
+	if(!running)
+		return false;
 
 	if(map.robot.bipBag > 0)
 		return true;
 	else
 		return false;
-
 }
 
 function robotShutOff(){
 
-	//Preciso fazer uma imagem para o robo desligado
+	if(running)
+		running = false;
+	else
+		return false;
 
+	var msg = new PIXI.Sprite(texMsgShutOff);
+	msg.position.x = (renderWidth - texMsgShutOff.width)/2;
+	msg.position.y = (renderHeight - texMsgShutOff.height)/2;
+	msg.interactive = true;
+	msg.mouseup = msg.touchend = function(data){
+		stage.removeChild(this);
+	}
+	stage.addChild(msg);
 }
 
 function robotDirNoth(){
+
+	if(!running)
+		return false;
+
 	if(map.robot.direction == 'N')
 		return true;
 	else
@@ -368,6 +408,10 @@ function robotDirNoth(){
 }
 
 function robotDirEast(){
+
+	if(!running)
+		return false;
+
 	if(map.robot.direction == 'E')
 		return true;
 	else
@@ -375,6 +419,10 @@ function robotDirEast(){
 }
 
 function robotDirSouth(){
+	
+	if(!running)
+		return false;
+
 	if(map.robot.direction == 'S')
 		return true;
 	else
@@ -382,10 +430,29 @@ function robotDirSouth(){
 }
 
 function robotDirWest(){
+	
+	if(!running)
+		return false;
+
 	if(map.robot.direction == 'W')
 		return true;
 	else
 		return false;
+}
+
+function resetMap(){
+
+	stage.removeChild(map);
+	stage.removeChild(menu);
+
+	map = new MapKarel(mapDefinition);
+	stage.addChild(map);
+
+	menu = new Menu();
+	stage.addChild(menu);
+
+	editMode = false;
+	running = true;
 }
 
 
@@ -439,9 +506,9 @@ function MapKarel(mapDef){
 }
 
 MapKarel.prototype.generateRobot =  function(){
-	this.robot = new PIXI.Sprite(texKarelBack);
+	this.robot = new PIXI.Sprite(texKarelLeft);
 	//-------------
-	this.robot.direction = 'N';
+	this.robot.direction = 'W';
 	this.robot.mapPosR = this.mapDefinition.length-1;
 	this.robot.mapPosC = 0;
 	this.robot.bipBag = 0;
@@ -484,14 +551,21 @@ MapKarel.prototype.addMapTile = function(x, y, type){
 		block = new PIXI.Sprite(texGround);
 		block.ktype = 'G';
 	}
+	block.mapPosition = [x,y];
 	block.anchor.x = 0.5;
 	block.anchor.y = 0.5;
 	block.position.x = x*this.mapTileSize + this.mapTileSize/2;
 	block.position.y = y*this.mapTileSize + this.mapTileSize/2;
 	block.bips = 0;
 	block.interactive = true;
-	block.click = function(mouseData){
+	block.mousedown = block.touchstart = function(mouseData){
+		block.firstTouch = mouseData.getLocalPosition(this.parent);
+	}
+	block.mouseup = block.touchend = function(mouseData){
 		if(editMode){
+			if(this.firstTouch.x != mouseData.getLocalPosition(this.parent).x || this.firstTouch.y != mouseData.getLocalPosition(this.parent).y)
+				return;
+
 			switch(currentBrush){
 				case 'G':
 				this.setTexture(texGround);
@@ -499,6 +573,9 @@ MapKarel.prototype.addMapTile = function(x, y, type){
 				this.bips = 0;
 				break;
 				case 'W':
+				if(this.mapPosition[0] == 0 && this.mapPosition[1] == mapDefinition.length - 1){
+					return;
+				}
 				this.setTexture(texWall);
 				this.ktype = 'W';
 				this.bips = 0;
@@ -506,7 +583,7 @@ MapKarel.prototype.addMapTile = function(x, y, type){
 				case 'B':
 				if(this.ktype == 'B'){
 					this.bips++;
-					break;
+					return;
 				}
 				this.setTexture(texBip);
 				this.ktype = 'B';
