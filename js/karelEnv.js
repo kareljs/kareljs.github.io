@@ -85,3 +85,17 @@ function downloadFonte() {
     alert.innerHTML = 'Para baixar um código fonte você precisa ter inserido um código fonte na caixa de texto acima ;D';
   }
 }
+
+function downloadMapa() {
+  var botao = document.getElementById('salvar-mapa');
+  var alert = document.getElementById('error-alert');
+
+  try {
+    var mapa = JSON.stringify(mapDefinition);
+    var nome = prompt('Insira um nome para o arquivo a ser salvo: ');
+    botao.download = (nome) ? nome + '.karelMapa' : 'mapa.karelMapa';
+    botao.href = gerarDownload(mapa);
+  } catch(e) {
+    alert.innerHTML = 'Houve um problema para gerar o mapa.';
+  }
+}
