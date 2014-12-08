@@ -59,10 +59,11 @@
               <div class="tab-pane active" id="fonte">
                 <h2>Entre com o código aqui em baixo</h2>
                 <textarea id="codigo-fonte" class="form-control" placeholder="Insira o código fonte aqui" rows="20"></textarea> <br>
-                <button type="submit" class="btn btn-primary" onclick="compilar();"><i class="fa fa-play-circle"></i> Executar programa</button>
+                <a class="btn btn-primary" onclick="compilar();"><i class="fa fa-play-circle"></i> Executar programa</a>
                 <a class="btn btn-primary" id="salvar-codigo" onclick="downloadFonte();"><i class="fa fa-file-text"></i> Salvar código</a>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Carregar código</button> <br><br>
-                <button type="submit" class="btn btn-primary" onclick="demo();"><i class="fa fa-upload"></i> Carregar exemplo</button>
+                <label for="carregar-codigo"><a class="btn btn-primary"><i class="fa fa-upload"></i> Carregar código</a></label> <br><br>
+                <a class="btn btn-primary" onclick="demo();"><i class="fa fa-upload"></i> Carregar exemplo</a>
+                <input type="file" style="display: none;" id="carregar-codigo" onchange="carregarCodigo();">
               </div> <!-- #fonte .tab-pane active -->
 
               <div class="tab-pane" id="objeto">
@@ -83,8 +84,9 @@
           <div class="col-md-8">
             <img src="img/karel50x50Ex.png" alt="Mapa do Robô" width="700" height="700"> <br><br>
             <a class="btn btn-primary" id="salvar-mapa" onclick="downloadMapa();"><i class="fa fa-file-image-o"></i> Salvar mapa</a>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Carregar mapa</button>
+            <label for="carregar-mapa"><a class="btn btn-primary"><i class="fa fa-upload"></i> Carregar mapa</a></label>
             <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar mapa no ambiente</button>
+            <input type="file" style="display: none;" id="carregar-mapa" onchange="carregarMapa();">
           </div>
           <div class="col-md-2">
             <a href="#" class="thumbnail">

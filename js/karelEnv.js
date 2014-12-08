@@ -99,3 +99,50 @@ function downloadMapa() {
     alert.innerHTML = 'Houve um problema para gerar o mapa.';
   }
 }
+
+function carregarCodigo() {
+  var fonte = document.getElementById('codigo-fonte');
+  var alert = document.getElementById('error-alert');
+  var file = document.getElementById('carregar-codigo');
+  file = file.files[0];
+
+  if (file) {
+    fileName = file.name || file.fileName;
+    var ext = fileName.split('.').pop();
+
+    if (ext == 'karel') {
+      var reader = new FileReader();
+      reader.onload = function() {
+        fonte.value = reader.result;
+      };
+      reader.readAsText(file);
+    } else {
+      alert.innerHTML = 'Por favor selecione um arquivo com a extensão ".karel"!';
+    }
+  } else {
+    alert.innerHTML = 'Por favor selecione um arquivo de código fonte.';
+  }
+}
+
+function carregarMapa() {
+  var alert = document.getElementById('error-alert');
+  var file = document.getElementById('carregar-mapa');
+  file = file.files[0];
+
+  if (file) {
+    fileName = file.name || file.fileName;
+    var ext = fileName.split('.').pop();
+
+    if (ext == 'karelMapa') {
+      var reader = new FileReader();
+      reader.onload = function() {
+        mapDefinition = JSON.parse(reader.result);
+      };
+      reader.readAsText(file);
+    } else {
+      alert.innerHTML = 'Por favor selecione um arquivo com a extensão ".karelMapa"!';
+    }
+  } else {
+    alert.innerHTML = 'Por favor selecione um arquivo de mapa.';
+  }
+}
