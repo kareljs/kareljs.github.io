@@ -137,6 +137,7 @@ function carregarMapa() {
       var reader = new FileReader();
       reader.onload = function() {
         mapDefinition = JSON.parse(reader.result);
+        resetMap(mapDefinition);
       };
       reader.readAsText(file);
     } else {
@@ -145,4 +146,8 @@ function carregarMapa() {
   } else {
     alert.innerHTML = 'Por favor selecione um arquivo de mapa.';
   }
+}
+
+function atualizarMapa() {
+  loadEditedMap();
 }

@@ -82,10 +82,10 @@
         <div class="tab-pane" id="editor-mapas">
           <h2>Editor de Mapas</h2>
           <div class="col-md-8">
-            <div id="editormapa"> <!-- # --><br><br>
+            <div id="editormapa"></div> <!-- #editormapa --> <br><br>
             <a class="btn btn-primary" id="salvar-mapa" onclick="downloadMapa();"><i class="fa fa-file-image-o"></i> Salvar mapa</a>
             <label for="carregar-mapa"><a class="btn btn-primary"><i class="fa fa-upload"></i> Carregar mapa</a></label>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar mapa no ambiente</button>
+            <a class="btn btn-primary" onclick="atualizarMapa();"><i class="fa fa-refresh"></i> Atualizar mapa no ambiente</a>
             <input type="file" style="display: none;" id="carregar-mapa" onchange="carregarMapa();">
           </div>
           <div class="col-md-2">
