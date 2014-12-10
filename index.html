@@ -75,14 +75,14 @@
           </div> <!-- .col-md-6 -->
 
           <div class="col-md-6">
-            <img src="img/karelPrototype.jpg" alt="Mapa do Robô" width="600" height="600">
+            <div id="mapa"></div> <!-- #mapa -->
           </div> <!-- .col-md-6 -->
         </div> <!-- #ambiente-programacao .tab-pane active -->
 
         <div class="tab-pane" id="editor-mapas">
           <h2>Editor de Mapas</h2>
           <div class="col-md-8">
-            <img src="img/karel50x50Ex.png" alt="Mapa do Robô" width="700" height="700"> <br><br>
+            <div id="editormapa"> <!-- # --><br><br>
             <a class="btn btn-primary" id="salvar-mapa" onclick="downloadMapa();"><i class="fa fa-file-image-o"></i> Salvar mapa</a>
             <label for="carregar-mapa"><a class="btn btn-primary"><i class="fa fa-upload"></i> Carregar mapa</a></label>
             <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar mapa no ambiente</button>
