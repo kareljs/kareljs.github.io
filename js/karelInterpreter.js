@@ -10,11 +10,13 @@ function Interpretador(codigoObjeto) {
     C[i] = codigo[i];
   }
 
-  var instrucao;
-  do {
-    instrucao = passo();
-  } while (instrucao != "dsl");
-  //window.setInterval(passo, 2000);
+  //var instrucao;
+  //do {
+  //  instrucao = passo();
+  //} while (instrucao != "dsl");
+  passo();
+  window.setInterval(passo, 300);
+  
 
   function passo() {
     if (encerrarExecucao) {
@@ -158,7 +160,7 @@ function Interpretador(codigoObjeto) {
       }
     }
     else if (comando == 'poe') {
-      if (!robotPutBip) {
+      if (!robotPutBip()) {
         console.log("Sem bips na bolsa");
         erros = true;
       }
