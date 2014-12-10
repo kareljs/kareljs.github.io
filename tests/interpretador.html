@@ -5,7 +5,7 @@
   <title>Exemplo Interpretador</title>
 </head>
 <body>
-
+  <div id="pixi"></div>
   <textarea id="codigo">
 INICIO-DO-PROGRAMA
   INICIO-DE-EXECUCAO
@@ -15,9 +15,12 @@ INICIO-DO-PROGRAMA
 FIM-DO-PROGRAMA</textarea><br>
   <button onclick="processa();">Processar</button>
 
-  <script src="../js/Robo.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../js/pixi.js"></script>
+  <script src="../js/karel.js"></script>
   <script src="../js/karelCompiler.js"></script>
   <script src="../js/karelInterpreter.js"></script>
+  
   <script>
     function processa() {
       var codFonte = document.getElementById('codigo');

@@ -1,5 +1,3 @@
-
-
 var mapDefinition = [
 			['G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
 			['G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
@@ -72,7 +70,7 @@ var menu;
 var stage;
 
 var editMode = true;
-var currentBrush = 'W';
+var currentBrush = 'B';
 var running = true;
 
 $(document).ready(function(){
@@ -82,14 +80,14 @@ $(document).ready(function(){
 $(document).keyup(function(e){
 	// if(e.which == 32)//Space
 	// 	robotMove();
-	if(e.which == 37)//LeftArrow
-		robotTurn();
-	if(e.which == 71)//G
-		robotGetBip();
-	if(e.which == 68)//D
-		robotPutBip();
-	if(e.which == 32)
-		resetMap();
+	// if(e.which == 37)//LeftArrow
+	// 	robotTurn();
+	// if(e.which == 71)//G
+	// 	robotGetBip();
+	// if(e.which == 68)//D
+	// 	robotPutBip();
+	// if(e.which == 32)
+	// resetMap();
 });
 
 function start(){
@@ -98,7 +96,8 @@ function start(){
 
 	var renderer = PIXI.autoDetectRenderer(renderWidth, renderHeight);
 
-	document.body.appendChild(renderer.view);
+	//document.body.appendChild(renderer.view);
+	document.getElementById('pixi').appendChild(renderer.view);
 
 	requestAnimFrame( animate );
 
@@ -362,7 +361,7 @@ function robotNearBip(){
 	if(!running)
 		return false;
 
-	if(map.getMapTile(nextC, nextR).ktype == 'B')
+	if(map.getMapTile(map.robot.mapPosC , map.robot.mapPosR).ktype == 'B')
 		return true;
 	else
 		return false;
@@ -506,9 +505,9 @@ function MapKarel(mapDef){
 }
 
 MapKarel.prototype.generateRobot =  function(){
-	this.robot = new PIXI.Sprite(texKarelLeft);
+	this.robot = new PIXI.Sprite(texKarelRight);
 	//-------------
-	this.robot.direction = 'W';
+	this.robot.direction = 'E';
 	this.robot.mapPosR = this.mapDefinition.length-1;
 	this.robot.mapPosC = 0;
 	this.robot.bipBag = 0;

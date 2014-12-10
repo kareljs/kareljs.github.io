@@ -4,7 +4,7 @@ function Interpretador(codigoObjeto) {
   var ip = 0;
   var encerrarExecucao = false;
   var codigo = codigoObjeto.split('\n');
-  var karel = new Robo();
+  var erros = false;
 
   for (var i = 0; i < codigo.length; i++) {
     C[i] = codigo[i];
@@ -15,8 +15,6 @@ function Interpretador(codigoObjeto) {
     instrucao = passo();
   } while (instrucao != "dsl");
   //window.setInterval(passo, 2000);
-
-  karel.imprimeCoordenadas();
 
   function passo() {
     if (encerrarExecucao) {
@@ -35,30 +33,30 @@ function Interpretador(codigoObjeto) {
     var auxiliar = instrucao.split(' ');
     var comando = auxiliar[0];
     var comandos = {
-      "mov": karel.mova,
-      "vre": karel.vireEsquerda,
-      "peg": karel.pegaBipe,
-      "poe": karel.poeBipe
+      "mov": robotMove,
+      "vre": robotTurn,
+      "peg": robotGetBip,
+      "poe": robotPutBip
     };
     var testes = {
-      "frb": karel.frenteBloqueada,
-      "frl": karel.frenteLivre,
-      "eqb": karel.esquerdaBloqueada,
-      "eql": karel.esquerdaLivre,
-      "drb": karel.direitaBloqueada,
-      "drl": karel.direitaLivre,
-      "nprb": karel.naoProximoBip,
-      "prb": karel.proximoBip,
-      "nexs": karel.naoExistemBipsNaBolsa,
-      "exs": karel.existemBipsNaBolsa,
-      "nvtn": karel.naoVoltadoNorte,
-      "vtn": karel.voltadoNorte,
-      "nvts": karel.naoVoltadoSul,
-      "vts": karel.voltadoSul,
-      "nvto": karel.naoVoltadoOeste,
-      "vto": karel.voltadoOeste,
-      "nvtl": karel.naoVoltadoLeste,
-      "vtl": karel.voltadoLeste
+      "frb": !robotFrontFree,
+      "frl": robotFrontFree,
+      "eqb": !robotLeftFree,
+      "eql": robotLeftFree,
+      "drb": !robotRightFree,
+      "drl": robotRightFree,
+      "nprb": !robotNearBip,
+      "prb": robotNearBip,
+      "nexs": !robotBipOnBag,
+      "exs": robotBipOnBag,
+      "nvtn": !robotDirNoth,
+      "vtn": robotDirNoth,
+      "nvts": !robotDirSouth,
+      "vts": robotDirSouth,
+      "nvto": !robotDirWest,
+      "vto": robotDirWest,
+      "nvtl": !robotDirEast,
+      "vtl": robotDirEast
     };
 
     if (comando == 'set') {
@@ -72,27 +70,98 @@ function Interpretador(codigoObjeto) {
     } else if (comando == 'jumpt') {
       var auxiliarJumpt = auxiliar[1].split(',');
       var condicao = auxiliarJumpt[1];
+      var jump = false;
 
       if (condicao == 'frl') {
-
+          jump = robotFrontFree();
       }
-
-      if (condicao.length > 4) {
+      else if (condicao == 'frb') {
+        jump = !robotFrontFree();
+      }
+      else if (condicao == 'eql') {
+        jump = robotLeftFree();
+      }
+      else if (condicao == 'eqb') {
+        jump = !robotLeftFree();
+      }
+      else if (condicao == 'drl') {
+        jump = robotRightFree();
+      }
+      else if (condicao == 'drb') {
+        jump = !robotRightFree();
+      }
+      else if (condicao == 'prb') {
+        jump = robotNearBip();
+      }
+      else if (condicao == 'nprb') {
+        jump = !robotNearBip();
+      }
+      else if (condicao == 'exs') {
+        jump = robotBipOnBag();
+      }
+      else if (condicao == 'nexs') {
+        jump = !robotBipOnBag();
+      }
+      else if (condicao == 'vtn') {
+        jump = robotDirNoth();
+      }
+      else if (condicao == 'nvtn') {
+        jump = !robotLeftFree();
+      }
+      else if (condicao == 'vto') {
+        jump = robotDirWest();
+      }
+      else if (condicao == 'nvto') {
+        jump = !robotDirWest();
+      }
+      else if (condicao == 'vtl') {
+        jump = robotDirEast();
+      }
+      else if (condicao == 'nvtl') {
+        jump = !robotDirEast();
+      }
+      else if (condicao == 'vts') {
+        jump = robotDirSouth();
+      }
+      else if (condicao == 'nvts') {
+        jump = !robotDirSouth();
+      }
+      
+      if (jump) {
+        ip = parseInt(auxiliarJumpt[0]);
+      }
+      else if (condicao.length > 4) {
         eval('var t = ' + condicao);
         if (t) {
           eval("ip = " + parseInt(auxiliarJumpt[0]));
         }
-      } else {
+      } /*else {
         if (condicao in testes) {
           testes[condicao]();
         }
-      }
+      }*/
     } else if (comando == 'dsl') {
       encerrarExecucao = true;
     } else if (comando == 'mov') {
-      karel.mova();
+      
+      if (!robotMove()) {
+        console.log("Sem espaço para movimentação");
+        erros = true;
+      }
     } else if (comando == 'vre') {
-      karel.vireEsquerda();
+      robotTurn();
+    }
+    else if (comando == 'peg') {
+      if (!robotGetBip()) {
+        console.log("Nenhum bip alcançável pelo robô");
+        erros = true;
+      }
+    }
+    else if (comando == 'poe') {
+      if (!robotPutBip) {
+        console.log("Sem bips na bolsa");
+        erros = true;
+      }
     }
   }
 }
