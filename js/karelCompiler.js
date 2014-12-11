@@ -23,7 +23,7 @@ function begin(original) { //Le arquivo de nome especificado
     var begin = false;
     var end = false;
     errorDisplayed = false;
-    errorOut = '';
+    errorOut = [];
     execOut = [];
     execCode = '';
     original = clean(original);

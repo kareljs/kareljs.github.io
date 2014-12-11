@@ -5,6 +5,7 @@ function compilar() {
 
   if (fonte.value) {
     var buffer = '';
+    alert.innerHTML = '';
 
     begin(fonte.value);
 

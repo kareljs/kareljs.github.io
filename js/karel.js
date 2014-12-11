@@ -82,16 +82,16 @@ $(document).ready(function(){
 	start();
 });
 
-$(document).keyup(function(e){
-	if(e.which == 32)//Space
-		robotMove();
-	if(e.which == 37)//LeftArrow
-		resetMap(mapDefinitionInitial);
-	if(e.which == 71)//G
-		loadEditedMap();
-	if(e.which == 68)//D
-		robotPutBip();
-});
+// $(document).keyup(function(e){
+// 	if(e.which == 32)//Space
+// 		robotMove();
+// 	if(e.which == 37)//LeftArrow
+// 		resetMap(mapDefinitionInitial);
+// 	if(e.which == 71)//G
+// 		loadEditedMap();
+// 	if(e.which == 68)//D
+// 		robotPutBip();
+// });
 
 function start(){
 

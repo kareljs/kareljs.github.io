@@ -4,7 +4,6 @@ function Interpretador(codigoObjeto) {
   var ip = 0;
   var encerrarExecucao = false;
   var codigo = codigoObjeto.split('\n');
-  var erros = false;
 
   for (var i = 0; i < codigo.length; i++) {
     C[i] = codigo[i];
@@ -34,32 +33,6 @@ function Interpretador(codigoObjeto) {
   function executarInstrucao(instrucao) {
     var auxiliar = instrucao.split(' ');
     var comando = auxiliar[0];
-    var comandos = {
-      "mov": robotMove,
-      "vre": robotTurn,
-      "peg": robotGetBip,
-      "poe": robotPutBip
-    };
-    var testes = {
-      "frb": !robotFrontFree,
-      "frl": robotFrontFree,
-      "eqb": !robotLeftFree,
-      "eql": robotLeftFree,
-      "drb": !robotRightFree,
-      "drl": robotRightFree,
-      "nprb": !robotNearBip,
-      "prb": robotNearBip,
-      "nexs": !robotBipOnBag,
-      "exs": robotBipOnBag,
-      "nvtn": !robotDirNoth,
-      "vtn": robotDirNoth,
-      "nvts": !robotDirSouth,
-      "vts": robotDirSouth,
-      "nvto": !robotDirWest,
-      "vto": robotDirWest,
-      "nvtl": !robotDirEast,
-      "vtl": robotDirEast
-    };
 
     if (comando == 'set') {
       var auxiliarSet = auxiliar[1].split(',');
@@ -131,38 +104,31 @@ function Interpretador(codigoObjeto) {
       
       if (jump) {
         ip = parseInt(auxiliarJumpt[0]);
-      }
-      else if (condicao.length > 4) {
+      } else if (condicao.length > 4) {
         eval('var t = ' + condicao);
         if (t) {
           eval("ip = " + parseInt(auxiliarJumpt[0]));
         }
-      } /*else {
-        if (condicao in testes) {
-          testes[condicao]();
-        }
-      }*/
+      }
     } else if (comando == 'dsl') {
       encerrarExecucao = true;
     } else if (comando == 'mov') {
-      
       if (!robotMove()) {
-        console.log("Sem espaço para movimentação");
-        erros = true;
+        encerrarExecucao = true;
+        robotShutOff();
+        document.getElementById('error-alert').innerHTML = 'Erro: O Karel não é capaz de passar por paredes';
       }
     } else if (comando == 'vre') {
       robotTurn();
-    }
-    else if (comando == 'peg') {
+    } else if (comando == 'peg') {
       if (!robotGetBip()) {
-        console.log("Nenhum bip alcançável pelo robô");
-        erros = true;
+        robotShutOff();
+        document.getElementById('error-alert').innerHTML = 'Erro: A Esquina não possui nenhum Bipe';
       }
-    }
-    else if (comando == 'poe') {
+    } else if (comando == 'poe') {
       if (!robotPutBip()) {
-        console.log("Sem bips na bolsa");
-        erros = true;
+        robotShutOff();
+        document.getElementById('error-alert').innerHTML = 'Erro: O Karel não possui Bipes em sua Sacola';
       }
     }
   }
