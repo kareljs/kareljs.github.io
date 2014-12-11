@@ -489,6 +489,22 @@ function loadEditedMap(){
 	resetMap(mapDefinition);
 }
 
+function changeBrush(newBrush){
+	switch(newBrush){
+		case 0:
+		mapEditor.currentBrush = 'G';
+		break;
+		case 1:
+		mapEditor.currentBrush = 'W';
+		break;
+		case 2:
+		mapEditor.currentBrush = 'B';
+		break;
+		default:
+		mapEditor.currentBrush = 'G';
+	}
+}
+
 //-----------------------------------------------------------------
 
 //Map Class--------------------------------------------------------
