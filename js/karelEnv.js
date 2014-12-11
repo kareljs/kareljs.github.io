@@ -14,6 +14,8 @@ function compilar() {
       }
 
       objeto.innerHTML = buffer;
+      resetMap(mapDefinition);
+      Interpretador(buffer);
     } else {
       for (r in errorOut) {
         buffer += errorOut[r] + '\n';
@@ -91,6 +93,9 @@ function downloadMapa() {
   var alert = document.getElementById('error-alert');
 
   try {
+    mapDefinition = mapEditor.mapDefinition.map(function(arr) {
+      return arr.slice();
+    });
     var mapa = JSON.stringify(mapDefinition);
     var nome = prompt('Insira um nome para o arquivo a ser salvo: ');
     botao.download = (nome) ? nome + '.karelMapa' : 'mapa.karelMapa';

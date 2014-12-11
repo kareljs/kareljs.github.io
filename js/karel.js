@@ -223,7 +223,7 @@ function robotGetBip(){
 		}else{
 			map.getMapTile(map.robot.mapPosC, map.robot.mapPosR).bips--;
 		}
-		
+
 		map.robot.bipBag++;
 		return true;
 	}else{
@@ -576,25 +576,28 @@ MapKarel.prototype.addMapTile = function(x, y, type){
 		case 'G':
 		block = new PIXI.Sprite(texGround);
 		block.ktype = 'G';
+		block.bips = 0;
 		break;
 		case 'W':
 		block = new PIXI.Sprite(texWall);
 		block.ktype = 'W';
+		block.bips = 0;
 		break;
 		case 'B':
 		block = new PIXI.Sprite(texBip);
 		block.ktype = 'B';
+		block.bips = 1;
 		break;
 		default:
 		block = new PIXI.Sprite(texGround);
 		block.ktype = 'G';
+		block.bips = 0;
 	}
 	block.mapPosition = [x,y];
 	block.anchor.x = 0.5;
 	block.anchor.y = 0.5;
 	block.position.x = x*this.mapTileSize + this.mapTileSize/2;
 	block.position.y = y*this.mapTileSize + this.mapTileSize/2;
-	block.bips = 0;
 	block.interactive = true;
 	block.mousedown = block.touchstart = function(mouseData){
 		block.firstTouch = mouseData.getLocalPosition(this.parent);

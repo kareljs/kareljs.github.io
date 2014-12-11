@@ -23,6 +23,9 @@ function begin(original) { //Le arquivo de nome especificado
     var begin = false;
     var end = false;
     errorDisplayed = false;
+    errorOut = '';
+    execOut = [];
+    execCode = '';
     original = clean(original);
     //console.log(original);
     code = original.split(" ");
