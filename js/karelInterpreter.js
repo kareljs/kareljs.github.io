@@ -14,7 +14,7 @@ function Interpretador(codigoObjeto) {
   //  instrucao = passo();
   //} while (instrucao != "dsl");
   passo();
-  window.setInterval(passo, 300);
+  window.setInterval(passo, 100);
   
 
   function passo() {
@@ -78,10 +78,10 @@ function Interpretador(codigoObjeto) {
         jump = !robotBipOnBag();
       }
       else if (condicao == 'vtn') {
-        jump = robotDirNoth();
+        jump = robotDirNorth();
       }
       else if (condicao == 'nvtn') {
-        jump = !robotLeftFree();
+        jump = !robotDirNorth();
       }
       else if (condicao == 'vto') {
         jump = robotDirWest();

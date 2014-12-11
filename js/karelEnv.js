@@ -43,6 +43,19 @@ function demo() {
     '\t\t\t\tINICIO\n' + 
     '\t\t\t\t\tSE frente-livre ENTAO\n' + 
     '\t\t\t\t\t\tmova\n' + 
+    '\t\t\t\t\tSENAO\n' + 
+    '\t\t\t\t\t\tSE voltado-norte ENTAO\n' + 
+    '\t\t\t\t\t\t\tINICIO\n' + 
+    '\t\t\t\t\t\t\t\tviredireita;\n' + 
+    '\t\t\t\t\t\t\t\tmova;\n' + 
+    '\t\t\t\t\t\t\t\tviredireita\n' + 
+    '\t\t\t\t\t\t\tFIM\n' + 
+    '\t\t\t\t\t\tSENAO\n' + 
+    '\t\t\t\t\t\t\tINICIO\n' + 
+    '\t\t\t\t\t\t\t\tvireesquerda;\n' + 
+    '\t\t\t\t\t\t\t\tmova;\n' + 
+    '\t\t\t\t\t\t\t\tvireesquerda\n' + 
+    '\t\t\t\t\t\t\tFIM\n' + 
     '\t\t\t\tFIM;\n' + 
     '\t\t\tSE proximo-a-bipe ENTAO\n' + 
     '\t\t\t\tpegabipe\n' + 

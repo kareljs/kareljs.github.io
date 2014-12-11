@@ -415,7 +415,7 @@ function robotShutOff(){
 	stage.addChild(msg);
 }
 
-function robotDirNoth(){
+function robotDirNorth(){
 
 	if(!running)
 		return false;
