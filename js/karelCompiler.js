@@ -54,7 +54,7 @@ function begin(original) { //Le arquivo de nome especificado
     }
     if (!errorDisplayed) {
         write();
-        print(execOut);
+        // print(execOut);
     }
 }
 
