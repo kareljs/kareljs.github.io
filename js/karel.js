@@ -74,6 +74,10 @@ var menuEditor;
 var stage;
 var stageEditor;
 
+var lastMapZoom = 0;
+var lastPositionX = 0;
+var lastPositionY = 0;
+
 var running = true;
 
 var mapDefinitionInitial;
@@ -461,6 +465,8 @@ function robotDirWest(){
 
 function resetMap(newMapDefinition){
 
+	alert();
+
 	stageEditor.removeChild(mapEditor);
 	stageEditor.removeChild(menuEditor);
 	mapEditor = new MapKarel(newMapDefinition, true);
@@ -531,7 +537,17 @@ function MapKarel(mapDef, editMode){
 
 	//-----------------------------------------
 	this.mapZoomMax = (renderHeight)/this.height;
-	this.mapZoom = this.mapZoomMax;
+	//this.mapZoom = this.mapZoomMax;
+	if(lastMapZoom == 0){
+		this.mapZoom = this.mapZoomMax;
+	}else{
+		this.mapZoom = lastMapZoom;
+		this.position.x = lastPositionX;
+		this.position.y = lastPositionY;
+
+		this.constrainMapKarel();
+	}
+
 	this.scale.x = this.scale.y = this.mapZoom;
 	//-----------------------------------------
 
@@ -551,6 +567,9 @@ function MapKarel(mapDef, editMode){
 			var position = data.getLocalPosition(this.parent);
 			this.position.x = position.x - this.mousePressPoint[0];
 			this.position.y = position.y - this.mousePressPoint[1];
+
+			lastPositionX = this.position.x;
+			lastPositionY = this.position.y;
 
 			this.constrainMapKarel();
 		}
@@ -675,12 +694,16 @@ MapKarel.prototype.zoomIn = function(){
 	this.mapZoom = Math.min(this.mapZoom * 2, 4);
 	this.scale.x = this.scale.y = this.mapZoom;
 
+	lastMapZoom = this.mapZoom;
+
 	this.constrainMapKarel();
 }
 
 MapKarel.prototype.zoomOut = function(){
 	this.mapZoom = Math.max(this.mapZoom / 2, this.mapZoomMax);
 	this.scale.x = this.scale.y = this.mapZoom;
+
+	lastMapZoom = this.mapZoom;
 
 	this.constrainMapKarel();
 }
